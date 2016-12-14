@@ -39,3 +39,8 @@ RUN set -x \
     && rm "datastax-studio-$STUDIO_VERSION.tar.gz" "datastax-studio-$STUDIO_VERSION.tar.gz.md5" \
     && apk del .studio-deps
 
+# Volume for configuration files
+VOLUME /opt/studio/conf
+
+# Expose the web UI port for studio
+EXPOSE 9091
