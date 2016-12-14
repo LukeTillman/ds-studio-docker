@@ -39,6 +39,9 @@ RUN set -x \
     && rm "datastax-studio-$STUDIO_VERSION.tar.gz" "datastax-studio-$STUDIO_VERSION.tar.gz.md5" \
     && apk del .studio-deps
 
+# Right now, the server.sh expects bash (which we don't have) so replace that
+RUN sed -i 's_bin/bash_bin/sh_' /opt/studio/bin/server.sh
+
 # Create directory for user data (this is the default location where connections and notebooks are saved)
 RUN mkdir /opt/studio/userdata \
     && chown -R studio:studio /opt/studio/userdata
