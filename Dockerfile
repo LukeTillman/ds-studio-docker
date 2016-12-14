@@ -39,15 +39,22 @@ RUN set -x \
     && rm "datastax-studio-$STUDIO_VERSION.tar.gz" "datastax-studio-$STUDIO_VERSION.tar.gz.md5" \
     && apk del .studio-deps
 
-# Right now, the server.sh expects bash (which we don't have) so replace that
+# Right now, the server.sh expects bash (which we don't have because we're on alpine) so replace that
 RUN sed -i 's_bin/bash_bin/sh_' /opt/studio/bin/server.sh
 
 # Create directory for user data (this is the default location where connections and notebooks are saved)
 RUN mkdir /opt/studio/userdata \
     && chown -R studio:studio /opt/studio/userdata
 
-# Volume for configuration files and user data
+# Set some default configuration settings in the yaml
+RUN sed -i 's/httpBindAddress: localhost/httpBindAddress: 0.0.0.0/' /opt/studio/conf/configuration.yaml \
+    && sed -i 's_baseDirectory: null_baseDirectory: /opt/studio/userdata_' /opt/studio/conf/configuration.yaml
+
+# Volumes for configuration files and user data
 VOLUME [ "/opt/studio/conf", "/opt/studio/userdata" ]
 
 # Expose the web UI port for studio
 EXPOSE 9091
+
+# Command to start the server (TODO: Add entrypoint with gosu)
+CMD [ "/opt/studio/bin/server.sh" ]
