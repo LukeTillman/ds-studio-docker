@@ -39,8 +39,12 @@ RUN set -x \
     && rm "datastax-studio-$STUDIO_VERSION.tar.gz" "datastax-studio-$STUDIO_VERSION.tar.gz.md5" \
     && apk del .studio-deps
 
-# Volume for configuration files
-VOLUME /opt/studio/conf
+# Create directory for user data (this is the default location where connections and notebooks are saved)
+RUN mkdir /opt/studio/userdata \
+    && chown -R studio:studio /opt/studio/userdata
+
+# Volume for configuration files and user data
+VOLUME [ "/opt/studio/conf", "/opt/studio/userdata" ]
 
 # Expose the web UI port for studio
 EXPOSE 9091
