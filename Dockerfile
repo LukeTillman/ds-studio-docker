@@ -22,8 +22,8 @@ RUN set -x \
     && gosu nobody true \
     && apk del .gosu-deps
 
-# Use this to change the Studio version we're building an image for
-ARG STUDIO_VERSION=1.0.2
+# See the build scripts and the STUDIO_VERSION file for setting this value
+ARG STUDIO_VERSION
 
 # Download, verify, and unpack Studio
 RUN set -x \
