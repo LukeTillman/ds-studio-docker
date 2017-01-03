@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  # One DSE node
+  dse:
+    image: luketillman/datastax-enterprise:5.0.4
+    # Tell DSE to start a graph node
+    command: [ -g ]
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      memlock: -1
+      
+  # One instance of DataStax Studio
+  studio:
+    image: luketillman/datastax-studio:1.0.2
+    ports:
+    # The Web UI exposed to our host
+    - "9091:9091"
+    depends_on:
+    - dse
