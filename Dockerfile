@@ -39,8 +39,9 @@ RUN set -x \
     && rm "datastax-studio-$STUDIO_VERSION.tar.gz" "datastax-studio-$STUDIO_VERSION.tar.gz.md5" \
     && apk del .studio-deps
 
-# Right now, the server.sh expects bash (which we don't have because we're on alpine) so replace that
-RUN sed -i 's_bin/bash_bin/sh_' /opt/studio/bin/server.sh
+# The server launch script wants bash, so install it
+RUN set -x \
+    && apk add --no-cache bash
 
 # Create directory for user data (this is the default location where connections and notebooks are saved)
 RUN mkdir /opt/studio/userdata \
