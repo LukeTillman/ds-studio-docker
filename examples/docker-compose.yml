@@ -1,10 +1,9 @@
 version: '2'
 
 # We're going to rely on an externally created network for our services to get around the 
-# problem with docker compose using underscores in network and container # names (and thus 
-# causing problems with invalid hostnames). See the comment on 
-# 34e78d05af2a287030598e545341ada36e9d24c for more details. You can create this network by 
-# running: 'docker network create graph'
+# problem with docker compose using underscores in network and container names (and thus causing
+# problems with invalid hostnames). See the comment on 34e78d05af2a287030598e545341ada36e9d24c 
+# for more details. You can create this network by running: 'docker network create graph'
 networks:
   graph:
     external: true
