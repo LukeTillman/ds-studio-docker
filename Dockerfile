@@ -53,8 +53,13 @@ RUN sed -i 's/httpBindAddress: localhost/httpBindAddress: 0.0.0.0/' /opt/studio/
 # Volumes for configuration files and user data
 VOLUME [ "/opt/studio/conf", "/opt/studio/userdata" ]
 
+# Entrypoint script for launching
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+
 # Expose the web UI port for studio
 EXPOSE 9091
 
-# Command to start the server (TODO: Add entrypoint with gosu)
+# Command to start the server
 CMD [ "/opt/studio/bin/server.sh" ]
