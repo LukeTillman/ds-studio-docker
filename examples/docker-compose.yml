@@ -11,7 +11,7 @@ networks:
 services:
   # One DSE node
   dse:
-    image: luketillman/datastax-enterprise:5.0.4
+    image: luketillman/datastax-enterprise:5.1.0
     # Tell DSE to start a graph node
     command: [ -g ]
     cap_add:
@@ -26,7 +26,7 @@ services:
 
   # One instance of DataStax Studio
   studio:
-    image: luketillman/datastax-studio:1.0.2
+    image: luketillman/datastax-studio:2.0.0
     ports:
     # The Web UI exposed to our host
     - "9091:9091"
