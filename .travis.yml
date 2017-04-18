@@ -1,3 +1,5 @@
+language: generic
+
 # Sudo required for doing docker build
 sudo: required
 services:
